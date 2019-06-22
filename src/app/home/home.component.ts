@@ -1,3 +1,4 @@
+import { JsonImporterService } from "./../services/json-importer/json-importer.service";
 import { Component, OnInit } from "@angular/core";
 
 @Component({
@@ -6,7 +7,11 @@ import { Component, OnInit } from "@angular/core";
   styleUrls: ["./home.component.sass"]
 })
 export class HomeComponent implements OnInit {
-  constructor() {}
+  constructor(private jsonImporterService: JsonImporterService) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.jsonImporterService.getJSON().subscribe(data => {
+      console.log(data);
+    });
+  }
 }
