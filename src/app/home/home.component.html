@@ -1,3 +1,55 @@
-<p>
-  home works!
-</p>
+<div class="main container-fluid">
+  <form>
+    <div class="form-group form-inline">
+        Поиск по проектам: <input class="form-control ml-2" type="text" [formControl]="filter"/>
+    </div>
+  </form>
+  <table class="table table-striped transactions-table">
+    <thead>
+    <tr>
+      <th scope="col">ID пользователя</th>
+      <th scope="col">E-mail пользователя</th>
+      <th scope="col">Страна</th>
+      <th scope="col">Проект</th>
+      <th scope="col">Подписка</th>
+      <th scope="col">Купленный предмет</th>
+      <th scope="col">Метод оплаты</th>
+      <th scope="col">Валюта</th>
+      <th scope="col">Размер перевода</th>
+    </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let entity of filteredTransactions | async; index as i" >
+        <td>
+          {{entity.user.id}}
+        </td>
+        <td>
+          {{entity.user.email}}
+        </td>
+        <td>
+          {{entity.user.country}}
+        </td>
+        <td>
+          <ngb-highlight [result]="entity.transaction.project.name" [term]="filter.value">
+          </ngb-highlight>
+        </td>
+        <td>
+          {{entity.purchase.subscription.name}}
+        </td>
+        <td>
+          {{entity.purchase.virtual_items}}
+        </td>
+        <td>
+          {{entity.transaction.payment_method.name}}
+        </td>
+        <td>
+          {{entity.payment_details.payment.currency}}
+        </td>
+        <td>
+          {{entity.payment_details.payment.amount}}
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+</div>
