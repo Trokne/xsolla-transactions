@@ -4,6 +4,7 @@ import { Component, PipeTransform, OnInit, OnDestroy } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { FormControl } from "@angular/forms";
 import { DecimalPipe } from "@angular/common";
+import * as CanvasJS from "additional_modules/canvasjs-2.3.1/canvasjs.min";
 
 @Component({
   selector: "app-home",
@@ -45,7 +46,23 @@ export class HomeComponent implements OnInit, OnDestroy {
         this.filterTransactions();
         this.parseProjects();
         this.parsePaymentSystemRating();
+        this.drawChart();
       });
+  }
+
+  private drawChart() {
+    const chart = new CanvasJS.Chart("chartContainer", {
+      animationEnabled: true,
+      exportEnabled: true,
+      data: [
+        {
+          type: "column",
+          dataPoints: this.paymentSystems.map(x => ({ y: x[1], label: x[0] }))
+        }
+      ]
+    });
+
+    chart.render();
   }
 
   private parseProjects() {
