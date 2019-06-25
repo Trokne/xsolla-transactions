@@ -1,4 +1,32 @@
 <div class="main container-fluid">
+  <div class="projects">
+    Проекты, по которым совершались платежи: {{projects}}.
+  </div>
+
+  <p class="header">Рейтинг платёжных систем</p>
+  <table class="table table-striped">
+      <thead>
+      <tr>
+        <th scope="col">№</th>
+        <th scope="col">Платёжная система</th>
+        <th scope="col">Количество использований</th>
+      </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let paymentSistem of paymentSystems ; index as i" >
+          <td>
+            {{i + 1}}
+          </td>
+          <td>
+            {{paymentSistem[0]}}
+          </td>
+          <td>
+            {{paymentSistem[1]}}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  <p class="header">Транзакции</p>
   <form>
     <div class="form-group form-inline">
         Поиск по проектам: <input class="form-control ml-2" type="text" [formControl]="filter"/>
