@@ -10,6 +10,6 @@
 
 ## Информация об авторе
 По всем интересующим вопросам обращайтесь напрямую к автору приложения - Вшивкову Михаилу.
-E-mail: vshivkov.ma@gmail.com
-telegram: @trokne
-vk.com: [/trokne](https://vk.com/trokne);
+* E-mail: vshivkov.ma@gmail.com
+* telegram: @trokne
+* vk.com: [/trokne](https://vk.com/trokne);
