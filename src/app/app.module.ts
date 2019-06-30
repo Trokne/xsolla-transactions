@@ -12,6 +12,7 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { TransactionsTableComponent } from "./transactions-table/transactions-table.component";
 import { RatingComponent } from "./rating/rating.component";
 import { ProjectsComponent } from "./projects/projects.component";
+import { NotFoundComponent } from "./not-found/not-found.component";
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { ProjectsComponent } from "./projects/projects.component";
     HomeComponent,
     TransactionsTableComponent,
     RatingComponent,
-    ProjectsComponent
+    ProjectsComponent,
+    NotFoundComponent
   ],
   imports: [
     HttpClientModule,

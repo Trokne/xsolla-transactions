@@ -17,5 +17,6 @@
   <app-transactions-table *ngIf="selectedMenu === 0" [rawTransactions] = "rawTransactions"></app-transactions-table>
   <app-rating *ngIf="selectedMenu === 1" [rawTransactions] = "rawTransactions"></app-rating>
   <app-projects *ngIf="selectedMenu === 2" [rawTransactions] = "rawTransactions"></app-projects>
+  <app-not-found *ngIf="selectedMenu === 404"></app-not-found>
 </div>
 

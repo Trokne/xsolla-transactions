@@ -41,6 +41,9 @@ export class HomeComponent implements OnInit, OnDestroy {
       case "/rating":
         this.selectedMenu = MenuType.Rating;
         break;
+      default:
+        this.selectedMenu = MenuType.NotFound;
+        break;
     }
   }
 

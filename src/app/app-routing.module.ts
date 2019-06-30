@@ -10,7 +10,8 @@ const routes: Routes = [
   },
   { path: "table", component: HomeComponent },
   { path: "projects", component: HomeComponent },
-  { path: "rating", component: HomeComponent }
+  { path: "rating", component: HomeComponent },
+  { path: "**", component: HomeComponent }
 ];
 
 @NgModule({

@@ -1,5 +1,6 @@
 export enum MenuType {
   Table,
   Rating,
-  Projects
+  Projects,
+  NotFound = 404
 }
