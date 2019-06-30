@@ -1,10 +1,9 @@
-import { Observable, Subscription } from "rxjs";
-import { map, startWith } from "rxjs/operators";
-import { Component, PipeTransform, OnInit, OnDestroy } from "@angular/core";
+import { MenuType } from "./../model/menu-types";
+import { Subscription } from "rxjs";
+import { Component, OnInit, OnDestroy } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import { FormControl } from "@angular/forms";
 import { DecimalPipe } from "@angular/common";
-import * as CanvasJS from "additional_modules/canvasjs-2.3.1/canvasjs.min";
+import { Router } from "@angular/router";
 
 @Component({
   selector: "app-home",
@@ -14,15 +13,11 @@ import * as CanvasJS from "additional_modules/canvasjs-2.3.1/canvasjs.min";
 })
 export class HomeComponent implements OnInit, OnDestroy {
   rawTransactions: any[];
-  paymentSystems: any[];
-  filteredTransactions: Observable<any[]>;
-  filter = new FormControl("");
-  projects: string;
-
+  selectedMenu: MenuType;
   private defaultDataPath: string;
   private transactionsSubscription: Subscription;
 
-  constructor(private http: HttpClient, pipe: DecimalPipe) {
+  constructor(private http: HttpClient, private router: Router) {
     this.defaultDataPath = "/assets/data/data.json";
   }
 
@@ -34,6 +29,24 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.unsubscribeAll();
   }
 
+  private handleRouting() {
+    switch (this.router.url) {
+      case "/":
+      case "/table":
+        this.selectedMenu = MenuType.Table;
+        break;
+      case "/projects":
+        this.selectedMenu = MenuType.Projects;
+        break;
+      case "/rating":
+        this.selectedMenu = MenuType.Rating;
+        break;
+      default:
+        this.selectedMenu = MenuType.NotFound;
+        break;
+    }
+  }
+
   private unsubscribeAll() {
     this.transactionsSubscription.unsubscribe();
   }
@@ -43,65 +56,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       .get(this.defaultDataPath)
       .subscribe(data => {
         this.rawTransactions = data as any[];
-        this.filterTransactions();
-        this.parseProjects();
-        this.parsePaymentSystemRating();
-        this.drawChart();
+        this.handleRouting();
       });
-  }
-
-  private drawChart() {
-    const chart = new CanvasJS.Chart("chartContainer", {
-      animationEnabled: true,
-      exportEnabled: true,
-      data: [
-        {
-          type: "column",
-          dataPoints: this.paymentSystems.map(x => ({ y: x[1], label: x[0] }))
-        }
-      ]
-    });
-
-    chart.render();
-  }
-
-  private parseProjects() {
-    this.projects = Array.from(
-      new Set(this.rawTransactions.map(x => x.transaction.project.name))
-    ).join(", ");
-  }
-
-  private parsePaymentSystemRating() {
-    const uncountedPaymentSystems = this.rawTransactions.map(
-      x => x.transaction.payment_method.name
-    ) as string[];
-
-    const unsortedSystems = {};
-
-    // tslint:disable-next-line: forin
-    for (const index in Object.keys(uncountedPaymentSystems)) {
-      const system = uncountedPaymentSystems[index];
-      unsortedSystems[system] = unsortedSystems[system]
-        ? unsortedSystems[system] + 1
-        : 1;
-    }
-
-    this.paymentSystems = Object.entries(unsortedSystems).sort(
-      (a, b) => (b[1] as number) - (a[1] as number)
-    );
-  }
-
-  private filterTransactions() {
-    this.filteredTransactions = this.filter.valueChanges.pipe(
-      startWith(""),
-      map(text => this.search(text))
-    );
-  }
-
-  public search(text: string): any[] {
-    return this.rawTransactions.filter(entity => {
-      const term = text.toLowerCase();
-      return entity.transaction.project.name.toLowerCase().includes(term);
-    });
   }
 }

@@ -1,0 +1,26 @@
+<p>Список платёжных систем:</p>
+<table class="table table-striped">
+  <thead>
+  <tr>
+    <th scope="col">№</th>
+    <th scope="col">Платёжная система</th>
+    <th scope="col">Количество использований</th>
+  </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let paymentSistem of paymentSystems ; index as i" >
+      <td>
+        {{i + 1}}
+      </td>
+      <td>
+        {{paymentSistem[0]}}
+      </td>
+      <td>
+        {{paymentSistem[1]}}
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Рейтинг:</p>
+<div id="chartContainer"></div>
